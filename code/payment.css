@@ -69,8 +69,8 @@
  .payment-shortcut-icon {width:40px;height:40px;}
  .payment-include-card {padding-top:15px;}
  .payment-submit {
-  bottom: calc(env(safe-area-inset-bottom) - 46px);
-}
+    bottom: calc(env(safe-area-inset-bottom) - 46px);
+  }
 }
 /* Restored original Custom Details switch, adapted to the new payment UI. */
 .payment-custom-details {
