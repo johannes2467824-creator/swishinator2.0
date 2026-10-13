@@ -268,5 +268,5 @@
 .payment-page .payment-tab.selected::after {
     background: #91d7ff !important;
     bottom: -1px !important;
-    transform: translateY(-3px) !important;
+    transform: translateY(-2px) !important;
 }
