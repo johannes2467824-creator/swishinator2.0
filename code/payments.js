@@ -57,6 +57,13 @@ value.textContent = randomDigits.match(/.{1,4}/g).join(' ');
 
  startIdleParticles();
 
+ // Record only when the demo confirmation screen has been reached.
+ saveDemoTransaction({
+   name: recipient,
+   phone: phone,
+   amount: document.getElementById('swishAmount')?.textContent || ''
+ });
+
 }
 
 function updateSwishDateTime() {
