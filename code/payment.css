@@ -264,7 +264,9 @@
   transform: none;
 }
 /* Blue underline position test */
+/* Final blue underline adjustment */
 .payment-page .payment-tab.selected::after {
-    bottom: 13px !important;
-    background: #ff0000 !important;
+    background: #91d7ff !important;
+    bottom: -1px !important;
+    transform: translateY(-5px) !important;
 }
