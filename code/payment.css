@@ -265,6 +265,6 @@
 }
 @media (display-mode: standalone) {
     .payment-page .payment-tab.selected::after {
-        bottom: 7px !important;
+        bottom: 13px !important;
     }
 }
