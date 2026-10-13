@@ -241,6 +241,18 @@
     bottom: -1px !important;
     z-index: 5;
 }
-.payment-submit {
-    background: #ff0000 !important;
+/* iPhone Home Screen layout adjustments */
+
+@media (display-mode: standalone) {
+
+    /* Move blue underline UP 5px */
+    .payment-page .payment-tab.selected::after {
+        bottom: 4px !important;
+    }
+
+    /* Move Swish button DOWN 30px */
+    .payment-page .payment-submit {
+        transform: translateY(30px);
+    }
+
 }
