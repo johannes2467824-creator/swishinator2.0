@@ -231,3 +231,13 @@
 @media (prefers-reduced-motion: reduce) {
   .payment-card-screen { animation: none; }
 }
+/* Consistent positioning in Safari and Home Screen app */
+
+.payment-page .payment-submit {
+    bottom: calc(env(safe-area-inset-bottom) + 10px) !important;
+}
+
+.payment-page .payment-tab.selected::after {
+    bottom: -1px !important;
+    z-index: 5;
+}
