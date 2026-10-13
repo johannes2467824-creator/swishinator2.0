@@ -80,7 +80,6 @@ swishscreen: `
 
   </div>
 
-  <div class="confirmation-demo-label" aria-label="Demo only, no real payment">DEMO PREVIEW · NO REAL PAYMENT</div>
 
   <div class="confirmation-footer">
 
@@ -94,7 +93,7 @@ swishscreen: `
 
 together: `<h1>Together</h1><div class="tile"><h2>Shared space</h2><p>Your shared activities will appear here.</p><button class="primary" onclick="demoNotice()">Create a shared space</button></div>`,
 
-history: `<h1>History</h1><div class="tile"><h2>No activity yet</h2><p>This demo has no transaction history.</p></div>`,
+history: `<h1>History</h1><div id="demoHistoryList"></div>`,
 
 profile: `<h1>Profile</h1><div class="tile"><h2>Demo profile</h2><p>Customize your app experience.</p><label>Display name<input class="field" id="displayname" placeholder="Your name" maxlength="40"></label><button class="primary" onclick="saveName()">Save name</button><p id="savedname"></p></div>`,
 
@@ -152,7 +151,7 @@ swish: `
       <span>Include a card</span>
     </button>
 
-    <div class="payment-demo-note">Demo only · No money will be sent</div>
+  
   </div>
 
   <button class="payment-submit" type="button" onclick="startDemoVerification()">
@@ -169,7 +168,7 @@ swish: `
       <span class="payment-card-header-spacer" aria-hidden="true"></span>
     </header>
     <div class="payment-card-screen-body">
-      <p class="payment-card-intro">Choose how your demo payment details appear.</p>
+      <p class="payment-card-intro">Choose how your payment details appear.</p>
       <div class="payment-name-field">
         <label for="recipient">Name:</label>
         <input id="recipient" type="text" autocomplete="off" placeholder="Enter recipient name" maxlength="100">
@@ -189,7 +188,7 @@ swish: `
       </div>
     </section>
 
-      <p class="payment-card-demo-note">Demo only · No money will be sent</p>
+
     </div>
     <button class="payment-card-done" type="button" onclick="closeCardOptions()">Done</button>
   </section>
@@ -248,6 +247,10 @@ function showPage(page) {
             // Contacts are displayed in the Contacts sheet on demand.
         }
 
+        if (page === 'history') {
+            renderDemoHistory();
+        }
+
     }
 
 
@@ -293,4 +296,65 @@ function formatSwedishPhone(phone) {
 
  return phone;
 
+}
+
+// Basic demo-only payment history. Stored locally on this device/browser.
+const DEMO_HISTORY_KEY = 'swishinatorDemoHistory';
+
+function getDemoHistory() {
+    try {
+        const items = JSON.parse(localStorage.getItem(DEMO_HISTORY_KEY) || '[]');
+        return Array.isArray(items) ? items : [];
+    } catch (error) {
+        console.warn('Could not read demo history:', error);
+        return [];
+    }
+}
+
+function saveDemoTransaction(transaction) {
+    try {
+        const history = getDemoHistory();
+        history.unshift({
+            name: String(transaction.name || '').trim() || 'Unknown recipient',
+            phone: String(transaction.phone || '').trim(),
+            amount: String(transaction.amount || '').trim()
+        });
+        localStorage.setItem(DEMO_HISTORY_KEY, JSON.stringify(history.slice(0, 100)));
+    } catch (error) {
+        console.warn('Could not save demo transaction:', error);
+    }
+}
+
+function renderDemoHistory() {
+    const list = document.getElementById('demoHistoryList');
+    if (!list) return;
+    list.replaceChildren();
+
+    const history = getDemoHistory();
+    if (!history.length) {
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        const title = document.createElement('h2');
+        title.textContent = 'No activity yet';
+        const description = document.createElement('p');
+        description.textContent = 'Completed demo payments will appear here.';
+        tile.append(title, description);
+        list.appendChild(tile);
+        return;
+    }
+
+    for (const transaction of history) {
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        const name = document.createElement('h2');
+        name.textContent = transaction.name || 'Unknown recipient';
+        const phone = document.createElement('p');
+        phone.textContent = transaction.phone || 'No number';
+        const amount = document.createElement('p');
+        amount.textContent = transaction.amount || '0 kr';
+        amount.style.color = '#e8f1fa';
+        amount.style.fontWeight = '700';
+        tile.append(name, phone, amount);
+        list.appendChild(tile);
+    }
 }
