@@ -241,3 +241,6 @@
     bottom: -1px !important;
     z-index: 5;
 }
+.payment-submit {
+    background: #ff0000 !important;
+}
