@@ -263,8 +263,8 @@
   bottom: max(5px, calc(env(safe-area-inset-bottom) - 30px)) !important;
   transform: none;
 }
-@media (display-mode: standalone) {
-    .payment-page .payment-tab.selected::after {
-        bottom: 13px !important;
-    }
+/* Blue underline position test */
+.payment-page .payment-tab.selected::after {
+    bottom: 13px !important;
+    background: #ff0000 !important;
 }
