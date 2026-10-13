@@ -71,7 +71,7 @@
  .payment-submit {
   bottom: calc(env(safe-area-inset-bottom) - 46px);
 }
-
+}
 /* Restored original Custom Details switch, adapted to the new payment UI. */
 .payment-custom-details {
   margin-top: 12px;
