@@ -47,7 +47,7 @@
         <div class="scan-camera-frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
         <p class="scan-camera-status" role="status">Opening camera…</p>
       </div>
-      <p class="scan-camera-note">Camera preview only · QR codes aren't read yet</p>
+      <p class="scan-camera-note">Word from Johannes: Scanner is still in Beta QR codes aren't read yet</p>
     `;
     document.body.appendChild(overlay);
     overlay.querySelector('.scan-camera-close').addEventListener('click', closeScanCamera);
