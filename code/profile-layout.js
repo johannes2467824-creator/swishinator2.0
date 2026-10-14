@@ -23,9 +23,10 @@
     <section class="profile-page" aria-label="Profile demo">
       <div class="profile-sticky" aria-hidden="false">
         <div class="profile-sticky-canvas">
-          <svg class="profile-green-header" viewBox="0 0 390 260" preserveAspectRatio="none" aria-hidden="true">
-            <defs><linearGradient id="profileGreenGradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#81a520"/><stop offset="1" stop-color="#117d2c"/></linearGradient></defs>
-            <path d="M0 0 H390 V207 Q195 290 0 207 Z" fill="url(#profileGreenGradient)"/>
+          <!-- A SINGLE green surface changes shape with scrolling; no crossfade. -->
+          <svg class="profile-green-header" viewBox="0 0 390 460" preserveAspectRatio="none" aria-hidden="true">
+            <defs><linearGradient id="profileGreenGradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#86a333"/><stop offset="1" stop-color="#2e7a34"/></linearGradient></defs>
+            <path class="profile-morph-shape" d="" fill="url(#profileGreenGradient)"/>
           </svg>
           <button type="button" class="profile-settings-button" onclick="profileDemoNotice('Settings')" aria-label="Settings">${gear}</button>
           <h1 class="profile-title">Profile</h1>
@@ -76,9 +77,10 @@
     const card = activeProfile.querySelector('.profile-qr-card');
     const frame = activeProfile.querySelector('.profile-qr-image-frame');
     const header = activeProfile.querySelector('.profile-green-header');
+    const greenShape = activeProfile.querySelector('.profile-morph-shape');
     const cardNumber = activeProfile.querySelector('.profile-card-number');
     const compactNumber = activeProfile.querySelector('.profile-compact-number');
-    if (!card || !frame || !header || !cardNumber || !compactNumber) return;
+    if (!card || !frame || !header || !greenShape || !cardNumber || !compactNumber) return;
 
     // Interpolate the SAME image from the large green card into the compact QR icon.
     const expandedWidth = Math.min(236, width - 66);
@@ -93,7 +95,29 @@
     card.style.width = px(interpolate(expandedWidth, 44, progress));
     card.style.height = px(interpolate(264, 44, progress));
     card.style.borderRadius = px(interpolate(24, 7, progress));
-    card.style.setProperty('--profile-card-opacity', String(1 - progress));
+    // Morph the same green SVG path: rounded card -> full-width curved header.
+    // No opacity blending or swapping between two green elements.
+    const left = interpolate(expandedLeft, 0, progress);
+    const right = interpolate(expandedLeft + expandedWidth, width, progress);
+    const top = interpolate(expandedTop, 0, progress);
+    const bottom = interpolate(449, 207, progress);
+    const radius = interpolate(24, 0, progress);
+    const curve = interpolate(0, 41.5, progress);
+    const center = (left + right) / 2;
+    const path = [
+      `M ${left + radius} ${top}`,
+      `L ${right - radius} ${top}`,
+      `Q ${right} ${top} ${right} ${top + radius}`,
+      `L ${right} ${bottom - radius}`,
+      `Q ${right} ${bottom} ${right - radius} ${bottom}`,
+      `Q ${center} ${bottom + 2 * curve} ${left + radius} ${bottom}`,
+      `Q ${left} ${bottom} ${left} ${bottom - radius}`,
+      `L ${left} ${top + radius}`,
+      `Q ${left} ${top} ${left + radius} ${top}`,
+      'Z'
+    ].join(' ');
+    header.setAttribute('viewBox', `0 0 ${width} 460`);
+    greenShape.setAttribute('d', path);
 
     frame.style.left = px(interpolate(20, 0, progress));
     frame.style.top = px(interpolate(20, 0, progress));
@@ -102,7 +126,7 @@
     frame.style.borderRadius = px(interpolate(12, 6, progress));
     cardNumber.style.opacity = String(Math.max(0, 1 - progress * 2.6));
     compactNumber.style.opacity = String(Math.max(0, Math.min(1, (progress - 0.55) / 0.45)));
-    header.style.opacity = String(progress);
+    // The green surface remains fully visible throughout the morph.
     activeProfile.style.setProperty('--profile-progress', progress.toFixed(4));
   }
 
