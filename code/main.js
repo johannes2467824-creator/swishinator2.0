@@ -337,7 +337,7 @@ function renderDemoHistory() {
         const title = document.createElement('h2');
         title.textContent = 'No activity yet';
         const description = document.createElement('p');
-        description.textContent = 'Completed demo payments will appear here.';
+        description.textContent = 'Completed payments will appear here.';
         tile.append(title, description);
         list.appendChild(tile);
         return;
