@@ -1,0 +1,94 @@
+/* Isolated scanner camera preview: does not affect payment or navbar styling. */
+.scan-camera-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  width: 100%;
+  max-width: 390px;
+  margin: 0 auto;
+  background: #0a131f;
+  color: #f1f6ff;
+  display: flex;
+  flex-direction: column;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.scan-camera-header {
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+  padding: 16px 19px;
+  text-align: center;
+  font-size: 19px;
+}
+.scan-camera-close {
+  width: 42px;
+  height: 42px;
+  border: 1px solid #2c4668;
+  border-radius: 50%;
+  background: #172434;
+  color: white;
+  font-size: 29px;
+  line-height: 1;
+  cursor: pointer;
+}
+.scan-camera-view {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  margin: 8px 18px 0;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #03070c;
+  display: grid;
+  place-items: center;
+}
+.scan-camera-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.scan-camera-frame {
+  position: relative;
+  z-index: 1;
+  width: min(70%, 260px);
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+.scan-camera-frame i {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border-color: #8edbff;
+  border-style: solid;
+  border-width: 0;
+}
+.scan-camera-frame i:nth-child(1) { top: 0; left: 0; border-top-width: 4px; border-left-width: 4px; border-top-left-radius: 12px; }
+.scan-camera-frame i:nth-child(2) { top: 0; right: 0; border-top-width: 4px; border-right-width: 4px; border-top-right-radius: 12px; }
+.scan-camera-frame i:nth-child(3) { bottom: 0; left: 0; border-bottom-width: 4px; border-left-width: 4px; border-bottom-left-radius: 12px; }
+.scan-camera-frame i:nth-child(4) { bottom: 0; right: 0; border-bottom-width: 4px; border-right-width: 4px; border-bottom-right-radius: 12px; }
+.scan-camera-status {
+  position: absolute;
+  z-index: 2;
+  bottom: 15px;
+  left: 12px;
+  right: 12px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.4;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  background: #07101bba;
+}
+.scan-camera-status[hidden] { display: none; }
+.scan-camera-note {
+  margin: 0;
+  padding: 18px 12px 22px;
+  text-align: center;
+  font-size: 12px;
+  color: #9bb0c6;
+}
