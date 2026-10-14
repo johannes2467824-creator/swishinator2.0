@@ -94,3 +94,77 @@ button { cursor:pointer; }
 
 
 .navbar[hidden] { display:none; }
+/* Smooth Swish payment screen entrance */
+
+.panel.payment-panel {
+    animation: swishSlideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes swishSlideUp {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .panel.payment-panel {
+        animation: none;
+    }
+}
+/* Smooth sliding navigation highlight */
+
+.navbar {
+    position: absolute;
+}
+
+.navbar::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc((100% - 6px) / 4);
+    background: #303B46;
+    border-radius: 38px;
+    pointer-events: none;
+
+    transform: translateX(0);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.navbar .tab {
+    position: relative;
+    z-index: 1;
+}
+
+.navbar .tab.active {
+    background: transparent;
+}
+
+/* Move highlight to selected tab */
+
+.navbar:has(.tab:nth-child(1).active)::before {
+    transform: translateX(0);
+}
+
+.navbar:has(.tab:nth-child(2).active)::before {
+    transform: translateX(100%);
+}
+
+.navbar:has(.tab:nth-child(3).active)::before {
+    transform: translateX(200%);
+}
+
+.navbar:has(.tab:nth-child(4).active)::before {
+    transform: translateX(300%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .navbar::before {
+        transition: none;
+    }
+}
