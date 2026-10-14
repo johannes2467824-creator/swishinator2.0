@@ -16,9 +16,10 @@
 
 <title>Mobile App Demo</title>
 
-<link rel="stylesheet" href="./code/style.css?v=20261014-1">
+<link rel="stylesheet" href="./code/style.css?v=20261014-3">
 <link rel="stylesheet" href="./code/confirmation.css?v=20261014-1">
 <link rel="stylesheet" href="./code/payment.css?v=20261014-6">
+<link rel="stylesheet" href="./code/scan-camera.css?v=1">
 
 <script>
   // iOS standalone fallback; affects only the payment layout overrides.
@@ -27,7 +28,7 @@
   }
 </script>
 </head>
-
+<script src="./code/scan-camera.js?v=1" defer></script>
 <body>
 
 <audio id="paymentSound" src="./sounds/payment.mp3" preload="auto"></audio>
@@ -44,7 +45,7 @@
 
 <button class="action" onclick="showPage('swish')">swish</button>
 
-<button class="action scan" onclick="showPage('scan')">Scan <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9V3h6M15 3h6v6M3 15v6h6M21 15v6h-6M7 7h3v3H7zM14 7h3v3h-3zM7 14h3v3H7zM14 14h2m2 0v3m-4 0h2"/></svg></button>
+<button class="action scan" onclick="openScanCamera()">Scan <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9V3h6M15 3h6v6M3 15v6h6M21 15v6h-6M7 7h3v3H7zM14 7h3v3h-3zM7 14h3v3H7zM14 14h2m2 0v3m-4 0h2"/></svg></button>
 
 </div>
 
